@@ -1,0 +1,52 @@
+from guizero import App,Slider,Text,PushButton
+import RPi.GPIO as GPIO
+x = 0
+Freq = 500
+    
+led_RED = 18
+led_GREEN = 23
+led_BLUE = 24
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(led_RED, GPIO.OUT)
+GPIO.setup(led_GREEN, GPIO.OUT)
+GPIO.setup(led_BLUE, GPIO.OUT)
+
+
+def RED(redslide_value):
+    duty = redslide_value
+    pwm_RED.ChangeDutyCycle(float(duty))
+    
+def GREEN(greenslide_value):
+    duty1 = greenslide_value
+    pwm_GREEN.ChangeDutyCycle(float(duty1))
+    
+def BLUE(blueslide_value):
+    duty2 = blueslide_value
+    pwm_BLUE.ChangeDutyCycle(float(duty2))
+    
+def exit ():
+    print("BYE")
+    app.destroy()
+    
+
+    
+    
+pwm_RED = GPIO.PWM(led_RED, Freq)
+pwm_RED.start(x)
+pwm_GREEN = GPIO.PWM(led_GREEN, Freq)
+pwm_GREEN.start(x)
+pwm_BLUE = GPIO.PWM(led_BLUE, Freq)
+pwm_BLUE.start(x)   
+    
+app = App()
+redslide = Slider(app, command = RED)
+greenslide = Slider(app, command = GREEN)
+blueslide = Slider(app,command = BLUE)
+button = PushButton(app,text = "EXIT",command = exit)
+app.display()
+
+
+
+
